@@ -20,9 +20,6 @@ install:
   # Check ansible version
   - ansible --version
 
-  # Create ansible.cfg with correct roles_path
-  - printf '[defaults]\nroles_path=../' >ansible.cfg
-
 script:
-  - . tests/travis_test.sh
+  - . tests/test.sh
 
