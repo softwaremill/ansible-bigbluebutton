@@ -24,5 +24,5 @@ install:
   - printf '[defaults]\nroles_path=../' >ansible.cfg
 
 script:
-  - travis_wait 30 . tests/test.sh
+  - . tests/travis_test.sh
 
