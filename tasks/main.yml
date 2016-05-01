@@ -74,6 +74,11 @@
   tags:
     - libreoffice_repositories
 
+- name: ffmpeg ppa is enabled
+  apt_repository: repo='ppa:mc3man/trusty-media'
+  tags:
+    - ffmpeg_repositories
+
 - name: BigBlueButton repo is enabled
   apt_repository: repo={{ item }} state=present
   with_items:
@@ -81,54 +86,9 @@
   tags:
     - bbb_repositories
 
-- name: Check whether the ffmpeg package is installed
-  shell: "dpkg --status ffmpeg | grep 'Status: install ok installed'"
-  register: is_ffmpeg_installed
-  failed_when: is_ffmpeg_installed.rc > 1
-  changed_when: False
-  tags:
-    - ffmpeg
-
-- name: Ensure /usr/local/src is present
-  file: path=/usr/local/src state=directory mode=0755
-  when: is_ffmpeg_installed.rc != 0
-  tags:
-    - ffmpeg
-
-- name: Obtain and unpack the ffmpeg tarball
-  unarchive:
-    src: 'http://ffmpeg.org/releases/ffmpeg-{{ ffmpeg_version }}.tar.bz2'
-    dest: /usr/local/src/
-    copy: no
-  when: is_ffmpeg_installed.rc != 0
-  tags:
-    - ffmpeg
-
-- name: Configure ffmpeg-2
-  shell: ./configure --enable-version3 --enable-postproc --enable-libvorbis --enable-libvpx && touch .configure_succeeded
-  args:
-    chdir: /usr/local/src/ffmpeg-{{ ffmpeg_version }}
-    creates: .configure_succeeded
-  when: is_ffmpeg_installed.rc != 0
-  tags:
-    - ffmpeg
-
-- name: Build ffmpeg-2
-  shell: make && touch .make_succeeded
-  args:
-    chdir: /usr/local/src/ffmpeg-{{ ffmpeg_version }}
-    creates: .make_succeeded
-  when: is_ffmpeg_installed.rc != 0
-  tags:
-    - ffmpeg
-
-- name: Install ffmpeg-2 package
-  shell: checkinstall --pkgname=ffmpeg --pkgversion="5:{{ ffmpeg_version }}" --backup=no --deldoc=yes --default && touch .checkinstall_succeeded
-  args:
-    chdir: /usr/local/src/ffmpeg-{{ ffmpeg_version }}
-    creates: .checkinstall_succeeded
-  when: is_ffmpeg_installed.rc != 0
-  tags:
+- name: Install ffmpeg
+  apt: name={{ item }} state=present
+  with_items:
     - ffmpeg
 
 - name: Install bigbluebutton
