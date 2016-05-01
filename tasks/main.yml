@@ -89,6 +89,12 @@
   tags:
     - ffmpeg
 
+- name: Ensure /usr/local/src is present
+  file: path=/usr/local/src state=directory mode=0755
+  when: is_ffmpeg_installed.rc != 0
+  tags:
+    - ffmpeg
+
 - name: Obtain and unpack the ffmpeg tarball
   unarchive:
     src: 'http://ffmpeg.org/releases/ffmpeg-{{ ffmpeg_version }}.tar.bz2'
