@@ -4,27 +4,11 @@
   tags:
     - update_apt_cache
 
-- name: BigBluebutton and ffmpeg required packages are present
+- name: BigBluebutton required packages are present
   apt: name={{ item }} state=present
   with_items:
-    - wget
-    - make
-    - checkinstall
     - language-pack-en
     - software-properties-common
-    - build-essential
-    - git-core
-    - checkinstall
-    - yasm
-    - texi2html
-    - libvorbis-dev
-    - libx11-dev
-    - libvpx-dev
-    - libxfixes-dev
-    - zlib1g-dev
-    - pkg-config
-    - netcat
-    - libncurses5-dev
   tags:
     - bbb_dependencies
 
@@ -80,14 +64,10 @@
   tags:
     - bbb_repositories
 
-- name: Install ffmpeg
-  apt: name={{ item }} state=present
-  with_items:
-    - ffmpeg
-
 - name: Install bigbluebutton
-  apt: name={{item}} state=present
+  apt: name={{ item }} state=present
   with_items:
     - bigbluebutton
     - bbb-demo
     - bbb-check
+
