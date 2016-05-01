@@ -1,2 +1,133 @@
 ---
-# tasks file for ansible-bigbluebutton/
+- name: Update apt cache
+  apt: update_cache=yes
+  tags:
+    - update_apt_cache
+
+- name: Upgrade system
+  apt: update_cache=yes upgrade=dist
+  tags:
+    - dist_upgrade
+    - non_idempotent
+
+- name: BigBluebutton and ffmpeg required packages are present
+  apt: name={{ item }} state=present
+  with_items:
+    - wget
+    - make
+    - checkinstall
+    - language-pack-en
+    - software-properties-common
+    - build-essential
+    - git-core
+    - checkinstall
+    - yasm
+    - texi2html
+    - libvorbis-dev
+    - libx11-dev
+    - libvpx-dev
+    - libxfixes-dev
+    - zlib1g-dev
+    - pkg-config
+    - netcat
+    - libncurses5-dev
+  tags:
+    - bbb_dependencies
+
+- name: apt_repository required packages are present
+  apt: name={{ item }} state=present
+  with_items:
+    - python-apt
+  tags:
+    - bbb_role_dependencies
+
+- name: Update locale (ensure LANG=en_US.UTF-8)
+  lineinfile: dest=/etc/default/locale regexp=^LANG line='LANG=en_US.UTF-8'
+  tags:
+    - set_locale
+
+- name: Update locale (ensure LC_ALL is absent)
+  lineinfile: dest=/etc/default/locale regexp=^LC_ALL state=absent
+  tags:
+    - set_locale
+
+- name: BigBlueButton apt key is present
+  apt_key:
+    url: http://ubuntu.bigbluebutton.org/bigbluebutton.asc
+    id: 328BD16D
+    state: present
+  tags:
+    - bbb_apt_key
+
+- name: multiverse apt repositories are enabled
+  apt_repository: repo={{ item }} state=present
+  with_items:
+    - 'deb http://archive.ubuntu.com/ubuntu trusty multiverse'
+    - 'deb-src http://archive.ubuntu.com/ubuntu trusty multiverse'
+    - 'deb http://archive.ubuntu.com/ubuntu trusty-updates multiverse'
+    - 'deb-src http://archive.ubuntu.com/ubuntu trusty-updates multiverse'
+  tags:
+    - multiverse_repositories
+
+- name: libreoffice ppa is enabled
+  apt_repository: repo='ppa:libreoffice/libreoffice-4-4'
+  tags:
+    - libreoffice_repositories
+
+- name: BigBlueButton repo is enabled
+  apt_repository: repo={{ item }} state=present
+  with_items:
+    - 'deb http://ubuntu.bigbluebutton.org/trusty-1-0/ bigbluebutton-trusty main'
+  tags:
+    - bbb_repositories
+
+- name: Check whether the ffmpeg package is installed
+  shell: "dpkg --status ffmpeg | grep 'Status: install ok installed'"
+  register: is_ffmpeg_installed
+  failed_when: is_ffmpeg_installed.rc > 1
+  changed_when: False
+  tags:
+    - ffmpeg
+
+- name: Obtain and unpack the ffmpeg tarball
+  unarchive:
+    src: 'http://ffmpeg.org/releases/ffmpeg-{{ ffmpeg_version }}.tar.bz2'
+    dest: /usr/local/src/
+    copy: no
+  when: is_ffmpeg_installed.rc != 0
+  tags:
+    - ffmpeg
+
+- name: Configure ffmpeg-2
+  shell: ./configure --enable-version3 --enable-postproc --enable-libvorbis --enable-libvpx && touch .configure_succeeded
+  args:
+    chdir: /usr/local/src/ffmpeg-{{ ffmpeg_version }}
+    creates: .configure_succeeded
+  when: is_ffmpeg_installed.rc != 0
+  tags:
+    - ffmpeg
+
+- name: Build ffmpeg-2
+  shell: make && touch .make_succeeded
+  args:
+    chdir: /usr/local/src/ffmpeg-{{ ffmpeg_version }}
+    creates: .make_succeeded
+  when: is_ffmpeg_installed.rc != 0
+  tags:
+    - ffmpeg
+
+- name: Install ffmpeg-2 package
+  shell: checkinstall --pkgname=ffmpeg --pkgversion="5:{{ ffmpeg_version }}" --backup=no --deldoc=yes --default && touch .checkinstall_succeeded
+  args:
+    chdir: /usr/local/src/ffmpeg-{{ ffmpeg_version }}
+    creates: .checkinstall_succeeded
+  when: is_ffmpeg_installed.rc != 0
+  tags:
+    - ffmpeg
+
+- name: Install bigbluebutton
+  apt: name={{item}} state=present
+  with_items:
+    - bigbluebutton
+    - bbb-demo
+    - bbb-check
