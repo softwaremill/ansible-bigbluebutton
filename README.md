@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/softwaremill/ansible-bigbluebutton.svg?branch=master)](https://travis-ci.org/softwaremill/ansible-bigbluebutton)
+
 Bigbluebutton
 =========
 
