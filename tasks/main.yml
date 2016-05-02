@@ -13,9 +13,7 @@
     - bbb_dependencies
 
 - name: apt_repository required packages are present
-  apt: name={{ item }} state=present
-  with_items:
-    - python-apt
+  apt: name=python-apt state=present
   tags:
     - bbb_role_dependencies
 
@@ -32,7 +30,7 @@
 - name: BigBlueButton apt key is present
   apt_key:
     url: http://ubuntu.bigbluebutton.org/bigbluebutton.asc
-    id: 328BD16D
+    id: '{{ bbb_apt_key }}'
     state: present
   tags:
     - bbb_apt_key
@@ -46,28 +44,39 @@
     - 'deb-src http://archive.ubuntu.com/ubuntu trusty-updates multiverse'
   tags:
     - multiverse_repositories
+    - repositories
 
 - name: libreoffice ppa is enabled
-  apt_repository: repo='ppa:libreoffice/libreoffice-4-4'
+  apt_repository: repo='{{ libreoffice_ppa }}'
   tags:
     - libreoffice_repositories
+    - repositories
 
 - name: ffmpeg ppa is enabled
-  apt_repository: repo='ppa:mc3man/trusty-media'
+  apt_repository: repo='{{ ffmpeg_ppa }}'
   tags:
     - ffmpeg_repositories
+    - repositories
 
 - name: BigBlueButton repo is enabled
   apt_repository: repo={{ item }} state=present
   with_items:
-    - 'deb http://ubuntu.bigbluebutton.org/trusty-1-0/ bigbluebutton-trusty main'
+    - 'deb {{ bbb_apt_repo_url }} bigbluebutton-trusty main'
   tags:
     - bbb_repositories
+    - repositories
 
-- name: Install bigbluebutton
-  apt: name={{ item }} state=present
-  with_items:
-    - bigbluebutton
-    - bbb-demo
-    - bbb-check
+- name: bigbluebutton is installed
+  apt: name=bigbluebutton state=present
+  tags:
+    - install_bbb
 
+- name: bbb-demo is installed
+  apt: name=bbb-demo state=present
+  tags:
+    - install_bbb_demo
+
+- name: bbb-check is installed
+  apt: name=bbb-check state=present
+  tags:
+    - install_bbb_check

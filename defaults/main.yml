@@ -1,2 +1,7 @@
 ---
-ffmpeg_version: '2.3.3'
+bbb_apt_key: '328BD16D'
+
+#Repositories
+bbb_apt_repo_url: 'http://ubuntu.bigbluebutton.org/trusty-1-0/'
+libreoffice_ppa: 'ppa:libreoffice/libreoffice-4-4'
+ffmpeg_ppa: 'ppa:mc3man/trusty-media'
