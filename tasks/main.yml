@@ -29,7 +29,7 @@
 
 - name: BigBlueButton apt key is present
   apt_key:
-    url: http://ubuntu.bigbluebutton.org/bigbluebutton.asc
+    url: http://ubuntu.bigbluebutton.org/repo/bigbluebutton.asc
     id: '{{ bbb_apt_key }}'
     state: present
   tags:
@@ -38,30 +38,18 @@
 - name: multiverse apt repositories are enabled
   apt_repository: repo={{ item }} state=present
   with_items:
-    - 'deb http://archive.ubuntu.com/ubuntu trusty multiverse'
-    - 'deb-src http://archive.ubuntu.com/ubuntu trusty multiverse'
-    - 'deb http://archive.ubuntu.com/ubuntu trusty-updates multiverse'
-    - 'deb-src http://archive.ubuntu.com/ubuntu trusty-updates multiverse'
+    - 'deb http://archive.ubuntu.com/ubuntu xenial multiverse'
+    - 'deb-src http://archive.ubuntu.com/ubuntu xenial multiverse'
+    - 'deb http://archive.ubuntu.com/ubuntu xenial-updates multiverse'
+    - 'deb-src http://archive.ubuntu.com/ubuntu xenial-updates multiverse'
   tags:
     - multiverse_repositories
-    - repositories
-
-- name: libreoffice ppa is enabled
-  apt_repository: repo='{{ libreoffice_ppa }}'
-  tags:
-    - libreoffice_repositories
-    - repositories
-
-- name: ffmpeg ppa is enabled
-  apt_repository: repo='{{ ffmpeg_ppa }}'
-  tags:
-    - ffmpeg_repositories
     - repositories
 
 - name: BigBlueButton repo is enabled
   apt_repository: repo={{ item }} state=present
   with_items:
-    - 'deb {{ bbb_apt_repo_url }} bigbluebutton-trusty main'
+    - 'deb {{ bbb_apt_repo_url }} bigbluebutton-xenial main'
   tags:
     - bbb_repositories
     - repositories
