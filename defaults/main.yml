@@ -1,7 +1,5 @@
 ---
-bbb_apt_key: '328BD16D'
+bbb_apt_key: 'FAB46452'
 
 #Repositories
-bbb_apt_repo_url: 'http://ubuntu.bigbluebutton.org/trusty-1-0/'
-libreoffice_ppa: 'ppa:libreoffice/libreoffice-4-4'
-ffmpeg_ppa: 'ppa:mc3man/trusty-media'
+bbb_apt_repo_url: 'http://ubuntu.bigbluebutton.org/xenial-110/'
