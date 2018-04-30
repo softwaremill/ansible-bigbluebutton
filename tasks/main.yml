@@ -1,10 +1,22 @@
 ---
+- name: Check if OS is supported
+  fail:
+    msg: "OS not supported for BigBlueButton installation"
+  when: ansible_distribution != "Ubuntu" or ansible_distribution_version != "{{ bbb_ubuntu_version }}"
+
+- name: Enable https support for apt
+  apt:
+    name: apt-transport-https
+    state: present
+  tags:
+    - apt_transport_https
+
 - name: Update apt cache
   apt: update_cache=yes
   tags:
     - update_apt_cache
 
-- name: BigBluebutton required packages are present
+- name: BigBluebutton required packages
   apt: name={{ item }} state=present
   with_items:
     - language-pack-en
@@ -29,8 +41,7 @@
 
 - name: BigBlueButton apt key is present
   apt_key:
-    url: http://ubuntu.bigbluebutton.org/bigbluebutton.asc
-    id: '{{ bbb_apt_key }}'
+    url: https://ubuntu.bigbluebutton.org/repo/bigbluebutton.asc
     state: present
   tags:
     - bbb_apt_key
@@ -38,30 +49,18 @@
 - name: multiverse apt repositories are enabled
   apt_repository: repo={{ item }} state=present
   with_items:
-    - 'deb http://archive.ubuntu.com/ubuntu trusty multiverse'
-    - 'deb-src http://archive.ubuntu.com/ubuntu trusty multiverse'
-    - 'deb http://archive.ubuntu.com/ubuntu trusty-updates multiverse'
-    - 'deb-src http://archive.ubuntu.com/ubuntu trusty-updates multiverse'
+    - 'deb http://archive.ubuntu.com/ubuntu xenial multiverse'
+    - 'deb-src http://archive.ubuntu.com/ubuntu xenial multiverse'
+    - 'deb http://archive.ubuntu.com/ubuntu xenial-updates multiverse'
+    - 'deb-src http://archive.ubuntu.com/ubuntu xenial-updates multiverse'
   tags:
     - multiverse_repositories
-    - repositories
-
-- name: libreoffice ppa is enabled
-  apt_repository: repo='{{ libreoffice_ppa }}'
-  tags:
-    - libreoffice_repositories
-    - repositories
-
-- name: ffmpeg ppa is enabled
-  apt_repository: repo='{{ ffmpeg_ppa }}'
-  tags:
-    - ffmpeg_repositories
     - repositories
 
 - name: BigBlueButton repo is enabled
   apt_repository: repo={{ item }} state=present
   with_items:
-    - 'deb {{ bbb_apt_repo_url }} bigbluebutton-trusty main'
+    - 'deb {{ bbb_apt_repo_url }} bigbluebutton-xenial main'
   tags:
     - bbb_repositories
     - repositories
@@ -80,3 +79,12 @@
   apt: name=bbb-check state=present
   tags:
     - install_bbb_check
+- name: Set bbb server name
+  command: bbb-conf --setip "{{ bbb_server_name }}"
+  tags:
+    - run_bbb-conf_setip
+- name: Restart bbb
+  command: bbb-conf --restart
+  tags:
+    - run_bbb-conf_restart
+
