@@ -12,13 +12,3 @@
     command: openssl dhparam -dsaparam -out /etc/nginx/ssl/dhp-4096.pem 4096 creates=/etc/nginx/ssl/dhp-4096.pem
     tags:
       - bbb_create_dhpem_file
-
-  - name: Link LetsEncrypt certificates to nginx SSL directory
-    file:
-      state: link
-      src: /etc/letsencrypt/live/{{ bbb_server_name }}/cert.pem
-      path: /etc/nginx/ssl/
-      owner: root
-      group: root
-    tags:
-      - bbb_letsencript_ssl_dir
