@@ -87,6 +87,34 @@
   tags:
     - run_bbb-conf_setip
 
+- name: Get server local IP address
+  debug: msg="{{ ansible_default_ipv4.address }}"
+  register: server_ip
+  tags:
+    - bbb-get_local_ip
+# - name: Print local IP address
+#   debug: msg="{{ server_ip }}"
+#   tags:
+#     - bbb-get_local_ip
+
+- name: Get server public IP address
+  ipify_facts:
+  register: public_ip
+  tags:
+    - bbb-get_public_ip
+
+- name: Get server public IP address
+  debug: msg="{{ public_ip.ansible_facts.ipify_public_ip }}"
+  register: public_ip
+  tags:
+    - bbb-get_public_ip
+
+- name: Print server public IP address
+  debug: msg="{{ public_ip }}"
+  tags:
+    - bbb-get_public_ip
+
+
 - name: Restart BigBlueButton
   command: bbb-conf --restart
   tags:
