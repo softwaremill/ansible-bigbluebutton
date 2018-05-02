@@ -96,8 +96,8 @@
 - name: Update http for https on demo
   replace:
     path: /var/lib/tomcat7/webapps/demo/bbb_api_conf.jsp
-    regexp: 'String BigBlueButtonURL = \"http:'
-    replace: 'String BigBlueButtonURL = \"https:'
+    regexp: 'String BigBlueButtonURL = "http:'
+    replace: 'String BigBlueButtonURL = "https:'
     backup: yes
   when: demo.stat.exists == True
   tags:
