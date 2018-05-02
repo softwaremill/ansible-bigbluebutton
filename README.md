@@ -21,7 +21,7 @@ Requires Ansible >= 2.4.0
 
 To get up _BigBlueButton_ up and running the following variables can be configured:
 
-  * _bbb_server_name_:  Set the FQDN hosntame that points to the server where _BigBlueButton_ is going to be installed> This is the only mandatory value, the playbook will fail if this variable is not defined.
+  * _bbb_server_name_:  Set the FQDN hosntame that points to the server where _BigBlueButton_ is going to be installed. This is the only mandatory value, the playbook will fail if this variable is not defined.
   * _bbb_configure_nat_: Configure NAT support for servers behind a firewall (Default: False).
   * _bbb_configure_ssl_: Configure SSL support using _LetsEncrypt_ certificates (Default: False).
   * _bbb_ssl_email_: Set _LetsEncrypt_ authorization email address.
