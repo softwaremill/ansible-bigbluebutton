@@ -115,6 +115,23 @@
     - bbb-get_public_ip
 
 
+- name: Verify local IP vs public IP addresses
+  debug: msg="{{ server_ip }}"
+  register: internal_ip
+  when: server_ip != public_ip
+  tags:
+    - bbb-check_server_ip
+
+- name: Verify local IP vs public IP addresses
+  debug: msg="{{ public_ip }}"
+  register: server_ip
+  when: server_ip != public_ip
+  tags:
+    - bbb-check_server_ip
+
+# BigBlueButton NAT configuration
+- include_tasks: nat.yml
+  when: bbb_configure_nat == True and internal_ip is defined
 - name: Restart BigBlueButton
   command: bbb-conf --restart
   tags:
