@@ -1,4 +1,11 @@
 ---
+- name: Check if bbb_ssl_email is defined
+  assert:
+    that:
+      - bbb_ssl_email != ""
+  tags:
+    - bbb-check_vars1
+
 - name: Install LetsEncrypt enabled nginx config
   template:
     src: templates/nginx/bbb-ssl.conf.j2
