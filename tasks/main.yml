@@ -86,8 +86,9 @@
   command: bbb-conf --setip "{{ bbb_server_name }}"
   tags:
     - run_bbb-conf_setip
-- name: Restart bbb
+
+- name: Restart BigBlueButton
   command: bbb-conf --restart
   tags:
-    - run_bbb-conf_restart
+    - bbb-restart
 
