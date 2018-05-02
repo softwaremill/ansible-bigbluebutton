@@ -5,3 +5,8 @@ bbb_ubuntu_version: "16.04"
 bbb_install_demo: False
 bbb_install_check: False
 bbb_configure_nat: False
+bbb_configure_ssl: False
+bbb_ssl_webroot_path: /var/www/bigbluebutton-default
+bbb_ssl_renewal_command_args: '--renew-hook "systemctl restart nginx"'
+## Uncoment the following line to test on test network.
+# bbb_ssl_server: "https://acme-staging.api.letsencrypt.org/directory"

@@ -132,6 +132,12 @@
 # BigBlueButton NAT configuration
 - include_tasks: nat.yml
   when: bbb_configure_nat == True and internal_ip is defined
+# BigBlueButton SSL configuration
+- include_tasks: letsencrypt.yml
+  when: bbb_configure_ssl == True
+- include_tasks: ssl.yml
+  when: bbb_configure_ssl == True
+
 - name: Restart BigBlueButton
   command: bbb-conf --restart
   tags:
