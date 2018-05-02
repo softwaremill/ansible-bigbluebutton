@@ -4,6 +4,13 @@
     msg: "OS not supported for BigBlueButton installation"
   when: ansible_distribution != "Ubuntu" or ansible_distribution_version != "{{ bbb_ubuntu_version }}"
 
+- name: Check if bbb_server_name is defined
+  assert:
+    that:
+      - bbb_server_name != ""
+  tags:
+    - bbb-check_vars
+
 - name: Enable https support for apt
   apt:
     name: apt-transport-https

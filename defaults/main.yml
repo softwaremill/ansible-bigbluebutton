@@ -1,6 +1,5 @@
 ---
 bbb_apt_repo_url: 'https://ubuntu.bigbluebutton.org/xenial-110/'
-bbb_server_name: "bbb.example.com"
 bbb_ubuntu_version: "16.04"
 bbb_install_demo: False
 bbb_install_check: False
