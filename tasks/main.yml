@@ -70,13 +70,15 @@
   tags:
     - install_bbb
 
-- name: bbb-demo is installed
+- name: Install bbb-demo package
   apt: name=bbb-demo state=present
+  when: bbb_install_demo == True
   tags:
-    - install_bbb_demo
+    - install_bbb-demo
 
-- name: bbb-check is installed
+- name: Install bbb-check package
   apt: name=bbb-check state=present
+  when: bbb_install_check == True
   tags:
     - install_bbb-check
 
