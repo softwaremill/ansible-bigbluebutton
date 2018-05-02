@@ -92,3 +92,12 @@
   tags:
     - bbb-restart
 
+- name: Check BigBlueButton installation
+  command: bbb-conf --check
+  register: bbb_check_out
+  tags:
+    - bbb-check_install
+- name: bbb-conf --check output
+  debug: msg="{{ bbb_check_out }}"
+  tags:
+    - bbb-check_install
