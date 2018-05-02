@@ -8,7 +8,7 @@
 
 - name: Install LetsEncrypt enabled nginx config
   template:
-    src: templates/nginx/bbb-ssl.conf.j2
+    src: templates/bbb-ssl.conf.j2
     dest: /etc/nginx/sites-available/bigbluebutton
     backup: yes
   tags:
