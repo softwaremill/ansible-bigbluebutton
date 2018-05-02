@@ -16,18 +16,18 @@
   tags:
     - update_apt_cache
 
-- name: BigBluebutton required packages
+- name: Install BigBluebutton required packages
   apt: name={{ item }} state=present
   with_items:
     - language-pack-en
     - software-properties-common
   tags:
-    - bbb_dependencies
+    - bbb-dependencies
 
-- name: apt_repository required packages are present
+- name: Check python-apt is present
   apt: name=python-apt state=present
   tags:
-    - bbb_role_dependencies
+    - bbb-role_dependencies
 
 - name: Update locale (ensure LANG=en_US.UTF-8)
   lineinfile: dest=/etc/default/locale regexp=^LANG line='LANG=en_US.UTF-8'
@@ -39,14 +39,14 @@
   tags:
     - set_locale
 
-- name: BigBlueButton apt key is present
+- name: Check BigBlueButton apt key is present
   apt_key:
     url: https://ubuntu.bigbluebutton.org/repo/bigbluebutton.asc
     state: present
   tags:
-    - bbb_apt_key
+    - bbb-apt_key
 
-- name: multiverse apt repositories are enabled
+- name: Check multiverse apt repositories are enabled
   apt_repository: repo={{ item }} state=present
   with_items:
     - 'deb http://archive.ubuntu.com/ubuntu xenial multiverse'
@@ -57,15 +57,15 @@
     - multiverse_repositories
     - repositories
 
-- name: BigBlueButton repo is enabled
+- name: Check BigBlueButton repo is enabled
   apt_repository: repo={{ item }} state=present
   with_items:
     - 'deb {{ bbb_apt_repo_url }} bigbluebutton-xenial main'
   tags:
-    - bbb_repositories
+    - bbb-repositories
     - repositories
 
-- name: bigbluebutton is installed
+- name: Check BigBlueButton is installed
   apt: name=bigbluebutton state=present
   tags:
     - install_bbb
@@ -78,8 +78,9 @@
 - name: bbb-check is installed
   apt: name=bbb-check state=present
   tags:
-    - install_bbb_check
-- name: Set bbb server name
+    - install_bbb-check
+
+- name: Set BigBlueButton server name
   command: bbb-conf --setip "{{ bbb_server_name }}"
   tags:
     - run_bbb-conf_setip
