@@ -136,6 +136,15 @@
   tags:
     - bbb-check_server_ip
 
+- name: Update BwMon server IP address
+  replace:
+    path: /var/www/bigbluebutton/client/conf/config.xml
+    regexp: '<bwMon server="[^"]*"'
+    replace: '<bwMon server="{{ server_ip }}"'
+    backup: yes
+  tags:
+    - update_bwmon_ip
+
 # BigBlueButton NAT configuration
 - include_tasks: nat.yml
   when: bbb_configure_nat == True and internal_ip is defined
