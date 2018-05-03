@@ -123,15 +123,15 @@
 
 
 - name: Verify local IP vs public IP addresses
-  debug: msg="{{ server_ip }}"
-  register: internal_ip
+  set_fact:
+    internal_ip: "{{ server_ip }}"
   when: server_ip != public_ip
   tags:
     - bbb-check_server_ip
 
 - name: Verify local IP vs public IP addresses
-  debug: msg="{{ public_ip }}"
-  register: server_ip
+  set_fact:
+    server_ip: "{{ public_ip }}"
   when: server_ip != public_ip
   tags:
     - bbb-check_server_ip
