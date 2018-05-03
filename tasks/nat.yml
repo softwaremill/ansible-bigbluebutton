@@ -39,3 +39,18 @@
       backup: yes
     tags:
       - bbb_configure_nat
+  - name: Create dummy nic for FreeSWITCH
+    template:
+      src: templates/dmmy_nic.j2
+      dest: /lib/systemd/system/dummy-nic.service
+      backup: yes
+    tags:
+      - bbb-create_dummy_nic
+  - name: Reload dummy nic
+    systemd:
+      state: restarted
+      daemon_reload: yes
+      enabled: yes
+      name: dummy-nic
+    tags:
+      - bbb-reload_dummy_nic
