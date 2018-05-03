@@ -53,8 +53,8 @@
 - name: Update http for https on red5
   replace:
     path: /usr/share/red5/webapps/screenshare/WEB-INF/screenshare.properties
-    regexp: 'jnlpUrl=http'
-    replace: 'jnlpUrl=https'
+    regexp: 'jnlpUrl=http:'
+    replace: 'jnlpUrl=https:'
     backup: yes
   tags:
     - bbb_enable_https
@@ -62,8 +62,8 @@
 - name: Update http for https on red5
   replace:
     path: /usr/share/red5/webapps/screenshare/WEB-INF/screenshare.properties
-    regexp: 'jnlpFile=http'
-    replace: 'jnlpFile=https'
+    regexp: 'jnlpFile=http:'
+    replace: 'jnlpFile=https:'
     backup: yes
   tags:
     - bbb_enable_https
