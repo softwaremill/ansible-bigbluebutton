@@ -7,7 +7,7 @@ The role follows _BigBlueButton_ official [installation instructions](http://doc
 Forked from [softwaremill/ansible-bigbluebutton](https://github.com/softwaremill/ansible-bigbluebutton), as it seems abandoned. Itr has the following additional features:
 
 ## Features
-  * Installs latest stable version (currently _1.1_).
+  * Installs latest stable version (currently _2.2_).
   * Installation behind a firewall (NAT setup support)
   * Automatic SSL configuration using _LetsEncrypt_ certificates using [thefinn93/ansible-letsencrypt](https://github.com/thefinn93/ansible-letsencrypt) role.
   * Optionally installs the demo and check packages.
@@ -28,8 +28,8 @@ To get up _BigBlueButton_ up and running the following variables can be configur
   * _bbb_install_demo_: Install the bbb-demo package, useful to easily test the new installation is working (Default: False).
   * _bbb_install_check_: Install the bbb-check package, useful to debug the new installation if having issues (Default: False).
 
-To test out _BigBlueButton_ 2.0 beta you could change the repo URL to this one (it whould work):
-  * bbb_apt_repo_url: 'https://ubuntu.bigbluebutton.org/xenial-200/' (Default: https://ubuntu.bigbluebutton.org/xenial-110/)
+[comment]: <> To test out _BigBlueButton_ 2.0 beta you could change the repo URL to this one (it whould work):
+[comment]: <>  * bbb_apt_repo_url: 'https://ubuntu.bigbluebutton.org/xenial-200/' (Default: https://ubuntu.bigbluebutton.org/xenial-110/)
 
 
 ## Example Playbook
