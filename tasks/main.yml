@@ -64,6 +64,15 @@
     - multiverse_repositories
     - repositories
 
+- name: Check supplemental PPA repos are enabled
+  apt_repository: repo={{ item }} state=present
+  with_items:
+    - 'ppa:bigbluebutton/support'
+    - 'ppa:rmescandon/yq'
+  tags:
+    - ppa-repositories
+    - repositories
+
 - name: Check BigBlueButton repo is enabled
   apt_repository: repo={{ item }} state=present
   with_items:
