@@ -127,6 +127,24 @@
   tags:
     - install_bbb-html5
 
+- name: Install notes playback package
+  apt: name=bbb-playback-notes state=present
+  when: bbb_install_playback_notes == True
+  tags:
+    - install_bbb-playback-notes
+
+- name: Install podcast playback package
+  apt: name=bbb-playback-podcast state=present
+  when: bbb_install_playback_podcast == True
+  tags:
+    - install_bbb-playback-podcast
+
+- name: Install screenshare playback package
+  apt: name=bbb-playback-screenshare state=present
+  when: bbb_install_playback_screenshare == True
+  tags:
+    - install_bbb-playback-screenshare
+
 - name: Install bbb-demo package
   apt: name=bbb-demo state=present
   when: bbb_install_demo == True
