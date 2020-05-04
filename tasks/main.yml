@@ -64,6 +64,15 @@
     - multiverse_repositories
     - repositories
 
+- name: Check supplemental PPA repos are enabled
+  apt_repository: repo={{ item }} state=present
+  with_items:
+    - 'ppa:bigbluebutton/support'
+    - 'ppa:rmescandon/yq'
+  tags:
+    - ppa-repositories
+    - repositories
+
 - name: Check BigBlueButton repo is enabled
   apt_repository: repo={{ item }} state=present
   with_items:
@@ -76,6 +85,65 @@
   apt: name=bigbluebutton state=present
   tags:
     - install_bbb
+
+- name: Check MongoDB apt key is present
+  apt_key:
+    url: "https://www.mongodb.org/static/pgp/server-3.4.asc"
+    state: present
+  when: bbb_install_html5 == True
+  tags:
+    - mongodb-apt_key
+
+- name: Check MongoDB repo is enabled
+  apt_repository: repo="deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" state=present
+  when: bbb_install_html5 == True
+  tags:
+    - mongodb-repositories
+    - repositories
+
+- name: Check NodeJS apt key is present
+  apt_key:
+    url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+    state: present
+  when: bbb_install_html5 == True
+  tags:
+    - nodejs-apt_key
+
+- name: Check NodeJS repo is enabled
+  apt_repository: repo="deb https://deb.nodesource.com/node_8.x xenial main" state=present
+  when: bbb_install_html5 == True
+  tags:
+    - nodejs-repositories
+    - repositories
+- name: Install bbb-html5 and dependencies
+  apt:
+    name:
+      - bbb-html5
+      - mongodb-org
+      - curl
+      - nodejs
+    state: present
+  when: bbb_install_html5 == True
+  tags:
+    - install_bbb-html5
+
+- name: Install notes playback package
+  apt: name=bbb-playback-notes state=present
+  when: bbb_install_playback_notes == True
+  tags:
+    - install_bbb-playback-notes
+
+- name: Install podcast playback package
+  apt: name=bbb-playback-podcast state=present
+  when: bbb_install_playback_podcast == True
+  tags:
+    - install_bbb-playback-podcast
+
+- name: Install screenshare playback package
+  apt: name=bbb-playback-screenshare state=present
+  when: bbb_install_playback_screenshare == True
+  tags:
+    - install_bbb-playback-screenshare
 
 - name: Install bbb-demo package
   apt: name=bbb-demo state=present
