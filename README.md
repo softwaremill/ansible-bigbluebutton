@@ -21,16 +21,16 @@ Requires Ansible >= 2.4.0
 
 To get up _BigBlueButton_ up and running the following variables can be configured:
 
-  * _bbb_server_name_:  Set the FQDN hosntame that points to the server where _BigBlueButton_ is going to be installed. This is the only mandatory value, the playbook will fail if this variable is not defined.
-  * _bbb_configure_nat_: Configure NAT support for servers behind a firewall (Default: False).
-  * _bbb_configure_ssl_: Configure SSL support using _LetsEncrypt_ certificates (Default: False).
-  * _bbb_ssl_email_: Set _LetsEncrypt_ authorization email address.
-  * _bbb_install_demo_: Install the bbb-demo package, useful to easily test the new installation is working (Default: False).
-  * _bbb_install_check_: Install the bbb-check package, useful to debug the new installation if having issues (Default: False).
-
-[comment]: <> To test out _BigBlueButton_ 2.0 beta you could change the repo URL to this one (it whould work):
-[comment]: <>  * bbb_apt_repo_url: 'https://ubuntu.bigbluebutton.org/xenial-200/' (Default: https://ubuntu.bigbluebutton.org/xenial-110/)
-
+  * `bbb_server_name`:  Set the FQDN hostname that points to the server where _BigBlueButton_ is going to be installed. This is the only mandatory value, the playbook will fail if this variable is not defined.
+  * `bbb_configure_nat`: Configure NAT support for servers behind a firewall (Default: `False`).
+  * `bbb_configure_ssl`: Configure SSL support using _LetsEncrypt_ certificates (Default: `False`).
+  * `bbb_ssl_email`: Set _LetsEncrypt_ authorization email address.
+  * `bbb_install_html5`: Install the HTML5 client (Default: `True`).
+  * `bbb_install_demo`: Install the bbb-demo package, useful to easily test the new installation is working (Default: `False`).
+  * `bbb_install_check`: Install the bbb-check package, useful to debug the new installation if having issues (Default: `False`).
+  * `bbb_install_playback_notes`: Install the bbb-playback-notes package to play back shared notes from a recorded session (Default: `True`).
+  * `bbb_install_playback_podcast`: Install the bbb-playback-podcast package to play back audio from a recorded session (Default: `True`).
+  * `bbb_install_playback_screenshare`: Install the bbb-playback-screenshare package to play back shared screens from a recorded session (Default: `True`).
 
 ## Example Playbook
 
