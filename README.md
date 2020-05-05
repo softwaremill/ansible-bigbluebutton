@@ -25,8 +25,13 @@ To get up _BigBlueButton_ up and running the following variables can be configur
   * _bbb_configure_nat_: Configure NAT support for servers behind a firewall (Default: False).
   * _bbb_configure_ssl_: Configure SSL support using _LetsEncrypt_ certificates (Default: False).
   * _bbb_ssl_email_: Set _LetsEncrypt_ authorization email address.
+  * _bbb_install_html5_: Install the HTML5 client (Default: True).
   * _bbb_install_demo_: Install the bbb-demo package, useful to easily test the new installation is working (Default: False).
   * _bbb_install_check_: Install the bbb-check package, useful to debug the new installation if having issues (Default: False).
+  * _bbb_install_playback_notes_: Install the bbb-playback-notes package to play back shared notes from a recorded session (Default: True).
+  * _bbb_install_playback_podcast_: Install the bbb-playback-podcast package to play back audio from a recorded session (Default: True).
+  * _bbb_install_playback_screenshare_: Install the bbb-playback-screenshare package to play back shared screens from a recorded session (Default: True).
+
 
 [comment]: <> To test out _BigBlueButton_ 2.0 beta you could change the repo URL to this one (it whould work):
 [comment]: <>  * bbb_apt_repo_url: 'https://ubuntu.bigbluebutton.org/xenial-200/' (Default: https://ubuntu.bigbluebutton.org/xenial-110/)
