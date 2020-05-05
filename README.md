@@ -32,11 +32,6 @@ To get up _BigBlueButton_ up and running the following variables can be configur
   * _bbb_install_playback_podcast_: Install the bbb-playback-podcast package to play back audio from a recorded session (Default: True).
   * _bbb_install_playback_screenshare_: Install the bbb-playback-screenshare package to play back shared screens from a recorded session (Default: True).
 
-
-[comment]: <> To test out _BigBlueButton_ 2.0 beta you could change the repo URL to this one (it whould work):
-[comment]: <>  * bbb_apt_repo_url: 'https://ubuntu.bigbluebutton.org/xenial-200/' (Default: https://ubuntu.bigbluebutton.org/xenial-110/)
-
-
 ## Example Playbook
 
 ```
