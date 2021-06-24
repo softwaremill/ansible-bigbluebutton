@@ -7,7 +7,7 @@ The role follows _BigBlueButton_ official [installation instructions](http://doc
 Forked from [softwaremill/ansible-bigbluebutton](https://github.com/softwaremill/ansible-bigbluebutton), as it seems abandoned. Itr has the following additional features:
 
 ## Features
-  * Installs latest stable version (currently _2.2_).
+  * Installs latest stable version (currently _2.3_).
   * Installation behind a firewall (NAT setup support)
   * Automatic SSL configuration using _LetsEncrypt_ certificates using [thefinn93/ansible-letsencrypt](https://github.com/thefinn93/ansible-letsencrypt) role.
   * Optionally installs the demo and check packages.
