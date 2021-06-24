@@ -1,7 +1,15 @@
 ---
-bbb_apt_key: '328BD16D'
-
-#Repositories
-bbb_apt_repo_url: 'http://ubuntu.bigbluebutton.org/trusty-1-0/'
-libreoffice_ppa: 'ppa:libreoffice/libreoffice-4-4'
-ffmpeg_ppa: 'ppa:mc3man/trusty-media'
+bbb_apt_repo_url: 'https://ubuntu.bigbluebutton.org/bionic-230/'
+bbb_ubuntu_version: "18.04"
+bbb_install_html5: True
+bbb_install_playback_notes: True
+bbb_install_playback_podcast: True
+bbb_install_playback_screenshare: True
+bbb_install_demo: False
+bbb_install_check: False
+bbb_configure_nat: False
+bbb_configure_ssl: False
+bbb_ssl_webroot_path: /var/www/bigbluebutton-default
+bbb_ssl_renewal_command_args: '--renew-hook "systemctl restart nginx"'
+## Uncoment the following line to test on test network.
+# bbb_ssl_server: "https://acme-staging.api.letsencrypt.org/directory"

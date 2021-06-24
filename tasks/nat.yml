@@ -1,0 +1,56 @@
+---
+  - name: Update Freeswitch STUN address with server IP address
+    replace:
+      path: /opt/freeswitch/etc/freeswitch/vars.xml
+      regexp: 'stun:stun.freeswitch.org'
+      replace: '{{ server_ip }}'
+      backup: yes
+    tags:
+      - bbb_configure_nat
+  - name: Configure Freeswitch SIP profiles
+    replace:
+      path: /opt/freeswitch/conf/sip_profiles/external.xml
+      regexp: 'ext-rtp-ip\" value=\"\$\${local_ip_v4'
+      replace: 'ext-rtp-ip\" value=\"\$\${external_rtp_ip'
+      backup: yes
+    tags:
+      - bbb_configure_nat
+  - name: Configure Freeswitch SIP profiles
+    replace:
+      path: /opt/freeswitch/conf/sip_profiles/external.xml
+      regexp: 'ext-sip-ip\" value=\"\$\${local_ip_v4'
+      replace: 'ext-sip-ip\" value=\"\$\${external_sip_ip'
+      backup: yes
+    tags:
+      - bbb_configure_nat
+  - name: Configure Freeswitch SIP profiles
+    replace:
+      path: /opt/freeswitch/conf/sip_profiles/external.xml
+      regexp: '<param name=\"ws-binding\".*'
+      replace: '<param name=\"ws-binding\"  value=\"{{ server_ip }}:5066\"'
+      backup: yes
+    tags:
+      - bbb_configure_nat
+  - name: Update nginx SIP configuration
+    replace:
+      path: /etc/bigbluebutton/nginx/sip.nginx
+      regexp: '{{ internal_ip }}:'
+      replace: '{{ server_ip }}:'
+      backup: yes
+    tags:
+      - bbb_configure_nat
+  - name: Create dummy nic for FreeSWITCH
+    template:
+      src: templates/dmmy_nic.j2
+      dest: /lib/systemd/system/dummy-nic.service
+      backup: yes
+    tags:
+      - bbb-create_dummy_nic
+  - name: Reload dummy nic
+    systemd:
+      state: restarted
+      daemon_reload: yes
+      enabled: yes
+      name: dummy-nic
+    tags:
+      - bbb-reload_dummy_nic
